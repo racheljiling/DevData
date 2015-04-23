@@ -1,7 +1,7 @@
 ---
-title       : Test deck
+title       : Developing Data Products Assignment
 subtitle    : 
-author      : 
+author      : Rachel Tang
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
@@ -10,7 +10,7 @@ widgets     : []            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
 
-## Read-And-Delete
+## Background
 
 1. Edit YAML front matter
 2. Write using R Markdown
@@ -18,9 +18,15 @@ mode        : selfcontained # {standalone, draft}
 
 --- .class #id 
 
-## Slide 2
+## Basic Analysis
 
 ```{r, fig.height=5, fig.width=5}
 plot(1 : 10, 1 : 10)
 ```
+--- .class #id 
 
+## Basic Analysis
+
+```{r, fig.height=5, fig.width=5}
+plot(1 : 10, 1 : 10)
+```

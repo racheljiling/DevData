@@ -1,30 +1,115 @@
 ---
-title       : Test deck
+title       : Data Development Submission
 subtitle    : 
-author      : 
+author      : Rachel Tang
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 widgets     : []            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
 ---
 
-## Read-And-Delete
+BMI and BMI Formulae (for Adult) 
+========================================================
 
-1. Edit YAML front matter
-2. Write using R Markdown
-3. Use an empty line followed by three dashes to separate slides!
+* *Body Mass Index (BMI)* is a number calculated from a person's weight and height
+* Calculation in lb and inches: 
+  + ( Weight (lb) / [Height (inch)]^2 ) * 703 
 
---- .class #id 
+---
+ 
+BMI (for Adult) Interpretation
+========================================================
 
-## Slide 2
+* BMI can be considered an reliable alternative for direct measures of body fat. 
+* BMI is an inexpensive and easy-to-perform method of screening for weight categories that may lead to health problems.  
+* Below is the relationship between BMI and Weight Status for adult. 
+
+BMI   | Weight Status
+------------- | -------------
+Below 18.5   |  Underweight
+18.5 - 24.9  | Normal
+25.0 - 29.9  |  Overweight
+30.0 and Above | Obese
+
+---
+ui.R
+========================================================
+
+ui.R contains the input forms for body mass and height. It also contains the main panels for the output of the estimate
+
+shinyUI(
+  pageWithSidebar(
+    # Application title
+    headerPanel("BMI Calculator"),
+    sidebarPanel(
+      h5('Enter your weight and height in kg/cm'),
+      numericInput('weight', 'Weight kg',50, min = 50, max = 200, step = 5),
+      numericInput('height', 'Height cm',100, min = 20, max = 300, step = 5),
+      submitButton('Submit')
+    ),
+    mainPanel(
+    ##
+    )
+    )
+    )
+
+---
+server.R
+========================================================
+
+server.R contains 2 key functions
+
+bmi:
+
+takes two inputs, bodyMass and height
+Calculates the body mass index
+classification:
+
+also takes two inputs, bodyMass and height
+Calculates and classifies the body mass index based on WHO defined standards
+    
+
+---
+
+R Code and Example  
+========================================================   
 
 
 ```r
-plot(1:10, 1:10)
+calculateBMI <- function(weight, height) {
+  return((weight / (height * height)) * 703)
+}
+
+bmistatus <- function(calculateBMI) {
+ 
+  if(bmi < 18.5) {
+    return("Underweight")
+  }
+  else if(bmi < 25) {
+    return("Normal weight")
+  }
+  else if(bmi < 30) {
+    return("Overweight")
+  }
+  else {
+    return("Obese")
+  }
+}
+#Example: Weight = 68 kg, Height = 1.65 m;
+calculateBMI(68,1.65);bmistatus() 
 ```
 
-![plot of chunk unnamed-chunk-1](assets/fig/unnamed-chunk-1.png) 
+```
+## [1] 17558.86
+```
 
+```
+## Error in bmistatus(): object 'bmi' not found
+```
 
+```
+## [1] 17558.86
+```

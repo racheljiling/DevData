@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Test deck</title>
+  <title>Data Development Submission</title>
   <meta charset="utf-8">
-  <meta name="description" content="Test deck">
-  <meta name="author" content="">
+  <meta name="description" content="Data Development Submission">
+  <meta name="author" content="Rachel Tang">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -32,9 +33,9 @@
     <!-- LOGO SLIDE -->
         <slide class="title-slide segue nobackground">
   <hgroup class="auto-fadein">
-    <h1>Test deck</h1>
+    <h1>Data Development Submission</h1>
     <h2></h2>
-    <p><br/></p>
+    <p>Rachel Tang<br/></p>
   </hgroup>
   <article></article>  
 </slide>
@@ -43,28 +44,144 @@
     <!-- SLIDES -->
     <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Read-And-Delete</h2>
+    <h1>BMI and BMI Formulae (for Adult) </h1>
   </hgroup>
   <article data-timings="">
-    <ol>
-<li>Edit YAML front matter</li>
-<li>Write using R Markdown</li>
-<li>Use an empty line followed by three dashes to separate slides!</li>
-</ol>
+    <ul>
+<li><em>Body Mass Index (BMI)</em> is a number calculated from a person&#39;s weight and height</li>
+<li>Calculation in lb and inches: 
+
+<ul>
+<li>( Weight (lb) / [Height (inch)]<sup>2</sup> ) * 703 </li>
+</ul></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="class" id="id" style="background:;">
+<slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Slide 2</h2>
+    <h1>BMI (for Adult) Interpretation</h1>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r">plot(1:10, 1:10)
+    <ul>
+<li>BMI can be considered an reliable alternative for direct measures of body fat. </li>
+<li>BMI is an inexpensive and easy-to-perform method of screening for weight categories that may lead to health problems.<br></li>
+<li>Below is the relationship between BMI and Weight Status for adult. </li>
+</ul>
+
+<table><thead>
+<tr>
+<th>BMI</th>
+<th>Weight Status</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Below 18.5</td>
+<td>Underweight</td>
+</tr>
+<tr>
+<td>18.5 - 24.9</td>
+<td>Normal</td>
+</tr>
+<tr>
+<td>25.0 - 29.9</td>
+<td>Overweight</td>
+</tr>
+<tr>
+<td>30.0 and Above</td>
+<td>Obese</td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h1>ui.R</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>ui.R contains the input forms for body mass and height. It also contains the main panels for the output of the estimate</p>
+
+<p>shinyUI(
+  pageWithSidebar(
+    # Application title
+    headerPanel(&quot;BMI Calculator&quot;),
+    sidebarPanel(
+      h5(&#39;Enter your weight and height in kg/cm&#39;),
+      numericInput(&#39;weight&#39;, &#39;Weight kg&#39;,50, min = 50, max = 200, step = 5),
+      numericInput(&#39;height&#39;, &#39;Height cm&#39;,100, min = 20, max = 300, step = 5),
+      submitButton(&#39;Submit&#39;)
+    ),
+    mainPanel(
+    ##
+    )
+    )
+    )</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h1>server.R</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>server.R contains 2 key functions</p>
+
+<p>bmi:</p>
+
+<p>takes two inputs, bodyMass and height
+Calculates the body mass index
+classification:</p>
+
+<p>also takes two inputs, bodyMass and height
+Calculates and classifies the body mass index based on WHO defined standards</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h1>R Code and Example  </h1>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">calculateBMI &lt;- function(weight, height) {
+  return((weight / (height * height)) * 703)
+}
+
+bmistatus &lt;- function(calculateBMI) {
+
+  if(bmi &lt; 18.5) {
+    return(&quot;Underweight&quot;)
+  }
+  else if(bmi &lt; 25) {
+    return(&quot;Normal weight&quot;)
+  }
+  else if(bmi &lt; 30) {
+    return(&quot;Overweight&quot;)
+  }
+  else {
+    return(&quot;Obese&quot;)
+  }
+}
+#Example: Weight = 68 kg, Height = 1.65 m;
+calculateBMI(68,1.65);bmistatus() 
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
+<pre><code>## [1] 17558.86
+</code></pre>
+
+<pre><code>## Error in bmistatus(): object &#39;bmi&#39; not found
+</code></pre>
+
+<pre><code>## [1] 17558.86
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -76,14 +193,32 @@
     <ul>
       <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=1 title='Read-And-Delete'>
+        data-slide=1 title='BMI and BMI Formulae (for Adult) '>
          1
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='Slide 2'>
+        data-slide=2 title='BMI (for Adult) Interpretation'>
          2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='ui.R'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='server.R'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='R Code and Example  '>
+         5
       </a>
     </li>
   </ul>
